@@ -217,7 +217,14 @@ uint32_t logitacker_keyboard_map_combo_str_to_hid_report(char const *in_str,
 uint32_t logitacker_keyboard_map_wc_to_hid_reports(hid_keyboard_report_t **p_out_report_seq, uint32_t *out_rep_seq_len,
                                                    logitacker_keyboard_map_lang_t in_layout, wchar_t in_rune) {
 
-    if (in_layout == LANGUAGE_LAYOUT_US) {
+    if (in_layout == LANGUAGE_LAYOUT_FR) {
+        switch (in_rune) {
+            LAYOUT_FR(LAYOUT_SWITCH_CASE)
+            default:
+                return NRF_ERROR_INVALID_PARAM;
+        }
+
+     if (in_layout == LANGUAGE_LAYOUT_US) {
         switch (in_rune) {
             LAYOUT_US(LAYOUT_SWITCH_CASE)
             default:
@@ -405,6 +412,8 @@ logitacker_keyboard_map_lang_t logitacker_keyboard_map_lang_from_str(char * lang
 
     if (strcmp(lang_str, "de") == 0 || strcmp(lang_str, "DE") == 0 ) return LANGUAGE_LAYOUT_DE;
     if (strcmp(lang_str, "us") == 0 || strcmp(lang_str, "US") == 0 ) return LANGUAGE_LAYOUT_US;
+    if (strcmp(lang_str, "fr") == 0 || strcmp(lang_str, "FR") == 0 ) return LANGUAGE_LAYOUT_FR;
+
 
     lab_default:
     NRF_LOG_WARNING("unknown language layout '%s' ... using 'us' as default", nrf_log_push(lang_str));
